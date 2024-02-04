@@ -1,5 +1,6 @@
 # Jenn added: large files
 resource/
+slurm/logs
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

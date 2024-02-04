@@ -27,7 +27,11 @@ This will create `lmdb_train` and `lmdb_test`, which should be treated as traini
 
 ### Train DAE (frame-level model)
 ```bash
-python train_DAE.py --config=../config/DAE_config.yml
+python train_DAE.py --config=../config/DAE_GENEA_jh.yml
+```
+Or submit the SLURM script:
+```bash
+sbatch train_DAE.batch
 ```
 
 ## The Best Paper Award Winner in Cognitive Robotics at IROS2022

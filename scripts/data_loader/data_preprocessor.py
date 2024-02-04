@@ -333,7 +333,8 @@ class DataPreprocessor:
                         self.n_out_samples += 1
 
     @staticmethod
-    def get_words_in_time_range(word_list: list[list], start_time: float, end_time: float) -> list[list]:
+    # def get_words_in_time_range(word_list: list[list], start_time: float, end_time: float) -> list[list]:
+    def get_words_in_time_range(word_list, start_time, end_time):
         """Retrieves words in the list that fall between the start_time and end_time provided.
 
         Args:
