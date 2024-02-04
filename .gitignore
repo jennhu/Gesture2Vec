@@ -1,3 +1,6 @@
+# Jenn added: large files
+resource/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -1,5 +1,35 @@
 # Gesture2Vec: Clustering Gestures using Representation Learning Methods for Co-speech Gesture Generation
 
+## JH instructions (February 2024)
+
+Create the environment:
+```bash
+conda env create -f gesture2vec.yml
+conda activate gesture2vec
+```
+
+### Preprocess Trinity data
+
+Download fastText vectors:
+```bash
+mkdir resource
+cd resource
+wget https://dl.fbaipublicfiles.com/fasttext/vectors-english/crawl-300d-2M-subword.zip
+unzip crawl-300d-2M-subword.zip
+```
+
+Make LMDB data for training set:
+```bash
+cd scripts
+python trinity_data_to_lmdb.py /n/holylabs/LABS/kempner_fellows/Users/jennhu/GENEA_Challenge_2020_data_release/Training_data
+```
+This will create `lmdb_train` and `lmdb_test`, which should be treated as training and validation sets, respectively.
+
+### Train DAE (frame-level model)
+```bash
+python train_DAE.py --config=../config/DAE_config.yml
+```
+
 ## The Best Paper Award Winner in Cognitive Robotics at IROS2022
 
 This is an official PyTorch implementation of _Gesture2Vec: Clustering Gestures using Representation Learning Methods for Co-speech Gesture Generation_ (IROS 2022). In this paper, we present an automatic gesture generation model that uses a vector-quantized variational autoencoder structure as well as training techniques to learn a rigorous representation of gesture sequences. We then translate input text into a discrete sequence of associated gesture chunks in the learned gesture space. Subjective and objective evaluations confirm the success of our approach in terms of appropriateness, human-likeness, and diversity. We also introduce new objective metrics using the quantized gesture representation.
