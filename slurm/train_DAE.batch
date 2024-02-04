@@ -1,0 +1,14 @@
+#!/bin/bash
+#SBATCH --account=kempner_fellows
+#SBATCH -p kempner
+#SBATCH -t 1-00:00 
+#SBATCH --mem=8G 
+#SBATCH --gres=gpu:1
+#SBATCH -o logs/dae_%j.out # Standard output
+#SBATCH -e logs/dae_%j.err # Standard error
+
+source ~/.bashrc
+mamba activate gesture2vec
+cd /n/home01/jennhu/Gesture2Vec/scripts
+
+python train_DAE.py --config=../config/DAE_GENEA_jh.yml
