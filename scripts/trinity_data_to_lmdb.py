@@ -54,39 +54,23 @@ target_joints = [
 ]
 rep_learning = False
 
+DATASET_Type = 'Trinity'
+# DATASET_Type = 'TWH'
 
-def process_bvh(gesture_filename: str) -> Tuple[np.ndarray, np.ndarray]:
-    """Converts a bvh file to numpy arrays.
-
-    Several parameters are fixed in this function as follows:
-        - 20 frames per second for each clip.
-        - 'hip_centric' model.
-        - To create more datapoints, mirror on the 'x' axis.
-        - 15 joints included in 'target_joints' global variable above.
-
-    Args:
-        gesture_filename: The string filename of a specific gesture (bvh) file.
-
-    Returns:
-        A 2-Tuple:
-            out_matrix[0]: Numpy array of the gestures.
-            out_matrix[1]: Numpy array of the mirrored gestures.
-    """
+def process_bvh(gesture_filename):
     p = BVHParser()
 
     data_all = list()
     data_all.append(p.parse(gesture_filename))
 
-    data_pipe = Pipeline(
-        [
-            ("dwnsampl", DownSampler(tgt_fps=20, keep_all=False)),
-            ("root", RootTransformer("hip_centric")),
-            ("mir", Mirror(axis="X", append=True)),
-            ("jtsel", JointSelector(target_joints, include_root=True)),
-            ("cnst", ConstantsRemover()),
-            ('np', Numpyfier())
-        ]
-    )
+    data_pipe = Pipeline([
+        ('dwnsampl', DownSampler(tgt_fps=20, keep_all=False)),
+        ('root', RootTransformer('hip_centric')),
+        ('mir', Mirror(axis='X', append=True)),
+        ('jtsel', JointSelector(target_joints, include_root=True)),
+        ('cnst', ConstantsRemover()),
+        ('np', Numpyfier())
+    ])
 
     out_data: np.ndarray = data_pipe.fit_transform(data_all)
     jl.dump(data_pipe, os.path.join("../resource", "data_pipe.sav"))
